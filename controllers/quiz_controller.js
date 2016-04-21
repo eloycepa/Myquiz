@@ -39,7 +39,7 @@ exports.check = function(req, res) {
 			if (quiz) {
 				var answer = req.query.answer || "";
 
-	var result = answer === 'Roma' ? 'Correcta' : 'Incorrecta';
+	var result = answer === quiz.answer ? 'Correcta' : 'Incorrecta';
 
 	res.render('quizzes/result', { quiz: quiz, 
 											   result: result, 
