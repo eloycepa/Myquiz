@@ -4,6 +4,7 @@ var models = require('../models');
 
 // Autoload el quiz asociado a :quizId
 exports.load = function(req, res, next, quizId) {
+  console.log('Loooooooooggggggg');
 	models.Quiz.findById(quizId)
   		.then(function(quiz) {
       		if (quiz) {
@@ -59,6 +60,8 @@ exports.new = function(req, res, next) {
 exports.create = function(req, res, next) {
   var quiz = models.Quiz.build({ question: req.body.quiz.question, 
   	                             answer:   req.body.quiz.answer} );
+
+// POST /quizzes  
 
 // guarda en DB los campos pregunta y respuesta de quiz
   quiz.save({fields: ["question", "answer"]})

@@ -8,7 +8,12 @@ var session = require('express-session');
 var partials = require('express-partials');
 var flash = require('express-flash');
 var methodOverride = require('method-override');
+var passport = require('passport');
 
+// load up the user model
+//var User = require('./models/user');
+
+      
 var routes = require('./routes/index');
 
 var app = express();
@@ -23,15 +28,25 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({secret: "Quiz 2016",
+app.use(session({secret: "Myquiz",
                  resave: false,
                  saveUninitialized: true}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(methodOverride('_method', {methods: ["POST", "GET"]}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(partials());
 app.use(flash());
 
 app.use('/', routes);
+
+
+
+app.use(function(req, res, next) {
+   // Hacer visible req.session en las vistas
+   res.locals.session = req.session;
+   next();
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
