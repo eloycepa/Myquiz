@@ -4,7 +4,7 @@ var path = require('path');
 var Sequelize = require('sequelize');
 
 // Postgres 
-var DATABASE_URL = "postgres:bvuwiozdayvcdl:_wkUYAe8KOVhZ6eDg5NKuPFzFf@ec2-54-163-254-197.compute-1.amazonaws.com:5432/d8h0p96ih08jm1";
+var DATABASE_URL = "postgres://mgqxtkzjptzjuo:NCYkkx2MzvQd1oCkyhuohF-u2q@ec2-50-17-253-74.compute-1.amazonaws.com:5432/de29v7bq1qatul";
 // SQLite   DATABASE_URL = sqlite://:@:/
 var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
 
