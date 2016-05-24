@@ -43,8 +43,8 @@ router.get('/profile',			           userController.show);
 //   });
 
 router.get('/auth/facebook',             authController.create);
-router.get('/auth/facebook/callback',    authController.fbcallback);
-router.get('/logout',             authController.destroy);                     
+router.get('/auth/facebook/callback/',    authController.fbcallback);
+router.get('/logout',                    authController.destroy);                     
 
 
 module.exports = router;

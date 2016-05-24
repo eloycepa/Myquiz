@@ -30,10 +30,10 @@ exports.index = function(req, res, next) {
  
 exports.show = function(req, res, next) {
     if(req.user){
-         res.render('users/profile.ejs', {
-            user : req.user 
-            }                                    // get the user out of session and pass to template
-        )};
+        res.render('users/profile.ejs', { user : req.user });
+     } else {
+        res.render('users/error.ejs');
+         };
 };
 
 

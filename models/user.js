@@ -4,7 +4,7 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('User',
                           { id: {primaryKey: true,
-        						type: DataTypes.INTEGER},
+        						type: DataTypes.BIGINT},
                             name:   DataTypes.STRING,
                             tocken: DataTypes.STRING,
                             email:  DataTypes.STRING

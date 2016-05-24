@@ -13,3 +13,5 @@ module.exports = {
     }
 
 };
+
+//'callbackURL'   : 'https://myquiz-2016.herokuapp.com/auth/facebook/callback/'
