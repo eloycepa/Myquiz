@@ -6,8 +6,9 @@ var router = express.Router();
 //var app = express();
 
 var quizController = require('../controllers/quiz_controller');
-var authController = require('../controllers/auth_controller')
+var authController = require('../controllers/auth_controller');
 var userController = require('../controllers/user_controller');
+var videoController = require('../controllers/video_controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -29,18 +30,14 @@ router.get('/quizzes/:quizId(\\d+)/edit',  quizController.edit);
 router.put('/quizzes/:quizId(\\d+)',       quizController.update);
 router.delete('/quizzes/:quizId(\\d+)',    quizController.destroy);
 
+
 router.get('/users',                       userController.index);
 router.get('/profile',			           userController.show); 
 
-/*router.get('/auth/facebook',
-  passport.authenticate('facebook'));*/
-
-// router.get('/auth/facebook/callback',
-//   passport.authenticate('facebook', { failureRedirect: '/auth/facebook' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/');
-//   });
+//========= VIDEO =========
+router.get('/video',                       videoController.show);
+//router.get('/video/new',      );
+//router.post('/video',      );
 
 router.get('/auth/facebook',             authController.create);
 router.get('/auth/facebook/callback/',    authController.fbcallback);
