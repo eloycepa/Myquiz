@@ -36,6 +36,7 @@ router.get('/profile',			           userController.show);
 
 //========= VIDEO =========
 router.get('/video',                       videoController.show);
+router.get('/video/streaming',             videoController.streaming);
 //router.get('/video/new',      );
 //router.post('/video',      );
 
