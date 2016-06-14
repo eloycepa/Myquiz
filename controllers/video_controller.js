@@ -1,15 +1,15 @@
 
 var fs = require('fs');
-var path = require('path');
+// var path = require('path');
 
-var movie_mp4;
+// var movie_mp4;
 
-fs.readFile(path.resolve(__dirname,"../public/videos/big_buck_bunny.mp4"), function (err, data) {
-    if (err) {
-        throw err;
-    }
-    movie_mp4 = data;
-});
+// fs.readFile(path.resolve(__dirname,"../public/videos/big_buck_bunny.mp4"), function (err, data) {
+//     if (err) {
+//         throw err;
+//     }
+//     movie_mp4 = data;
+// });
 
 exports.show = function(req, res, next){
 	console.log('Se mete en el show');
@@ -17,26 +17,32 @@ exports.show = function(req, res, next){
 };
 
 exports.streaming = function(req, res){
-	var total;
-    if(movie_mp4){
-        total = movie_mp4.length;
-    }  
-    var range = "bytes=0-";
-
+    var videoPath = 'public/videos/BigBuckBunny.mp4';
+    var stat = fs.statSync(videoPath);
+    var total = stat.size;
     console.log(req.headers);
- //   console.log(req);
 
-    var positions = range.replace(/bytes=/, "").split("-");
-    var start = parseInt(positions[0], 10);
-    // if last byte position is not present then it is the last byte of the video file.
-    var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
-    var chunksize = (end-start)+1;
+    if(req.headers['range']){
+        var range = req.headers.range;
+        var parts = range.headers.replace(/bytes=/, "").split("-");
+        var partialstart = parts[0];
+        var partialend = parts[1];
 
-    if(movie_mp4){
+        var start = parseInt(partialstart, 10);
+        var end = partialend ? parseInt(partialend, 10) : total-1;
+        var chunksize = (end-start)+1;
+        console.log('RANGE: ' + start + ' - ' + end + ' = ' + chuncksize);
+
+        var file = fs.createReadStream(videoPath, {start: start, end: end});
         res.writeHead(206, { "Content-Range": "bytes " + start + "-" + end + "/" + total, 
                              "Accept-Ranges": "bytes",
                              "Content-Length": chunksize,
                              "Content-Type":"video/mp4"});
-        res.end(movie_mp4.slice(start, end+1), "binary");
+        file.pipe(res);        
+    } else {
+        console.log('ALL: ' + total);
+        res.writeHead(200, { "Content-Length": total,
+                             "Content-Type":"video/mp4"}); 
+        fs.createReadStream(videoPath).pipe(res);
     }
 };
