@@ -52,71 +52,8 @@ exports.streaming = function(req, res){
 };
 
 exports.hls = function(req, res){
-    var uri = url.parse(req.url).pathname;
-
-    console.log('URI ================>>>>>> : ' + uri); 
-
-    if (uri == '/streaming/player') {
-  //      Console.log('URI ================>>>>>> : ' + uri); 
-        res.render('videos/streaming.ejs');
-        res.end();
-        return;
-    }
-
-    var filename = path.join("./", uri);
-    fs.exists(filename, function (exists) {
-        if (!exists) {
-            console.log('file not found: ' + filename);
-            res.writeHead(404, { 'Content-Type': 'text/plain' });
-            res.write('file not found: %s\n', filename);
-            res.end();
-        } else {
-            console.log('ENTROOOOOOO=========!=!=!=!=!=!!=!=!=!=!=!')
-            console.log('sending file: ' + filename);
-            switch (path.extname(uri)) {
-            case '.m3u8':
-                fs.readFile(filename, function (err, contents) {
-                    if (err) {
-                        res.writeHead(500);
-                        res.end();
-                    } else if (contents) {
-                        res.writeHead(200,
-                            {'Content-Type':
-                            'application/vnd.apple.mpegurl'});
-                        var ae = req.headers['accept-encoding'];
-                        if (ae.match(/\bgzip\b/)) {
-                            zlib.gzip(contents, function (err, zip) {
-                                if (err) throw err;
-
-                                res.writeHead(200,
-                                    {'content-encoding': 'gzip'});
-                                res.end(zip);
-                            });
-                        } else {
-                            res.end(contents, 'utf-8');
-                        }
-                    } else {
-                        console.log('emptly playlist');
-                        res.writeHead(500);
-                        res.end();
-                    }
-                });
-                break;
-            case '.ts':
-                res.writeHead(200, { 'Content-Type':
-                    'video/MP2T' });
-                var stream = fs.createReadStream(filename,
-                    { bufferSize: 64 * 1024 });
-                stream.pipe(res);
-                break;
-            default:
-                console.log('unknown file type: ' +
-                    path.extname(uri));
-                res.writeHead(500);
-                res.end();
-            }
-        }
-    });
+//   var uri = url.parse(req.url).pathname;
+   res.render('videos/streaming.ejs');
 };
 
 

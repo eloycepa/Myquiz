@@ -37,13 +37,13 @@ router.get('/profile',			           userController.show);
 //========= VIDEO =========
 router.get('/video',                       videoController.show);
 router.get('/video/streaming',             videoController.streaming);
-router.get('/streaming/*',                 videoController.hls);
+router.get('/streaming',                   videoController.hls);
 //router.get('/video/new',      );
 //router.post('/video',      );
 
-router.get('/auth/facebook',             authController.create);
-router.get('/auth/facebook/callback/',    authController.fbcallback);
-router.get('/logout',                    authController.destroy);                     
+router.get('/auth/facebook',               authController.create);
+router.get('/auth/facebook/callback/',     authController.fbcallback);
+router.get('/logout',                      authController.destroy);                     
 
 
 module.exports = router;
