@@ -4,10 +4,10 @@ var path = require('path');
 var Sequelize = require('sequelize');
 
 // Postgres 
-//var DATABASE_URL = "postgres://mgqxtkzjptzjuo:NCYkkx2MzvQd1oCkyhuohF-u2q@ec2-50-17-253-74.compute-1.amazonaws.com:5432/de29v7bq1qatul";
+var DATABASE_URL = "postgres://mgqxtkzjptzjuo:NCYkkx2MzvQd1oCkyhuohF-u2q@ec2-50-17-253-74.compute-1.amazonaws.com:5432/de29v7bq1qatul";
 // SQLite   
 //var DATABASE_URL = sqlite://:@:/
-var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
+var url = DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
 
 var DATABASE_PROTOCOL = url[1];
 var DATABASE_DIALECT  = url[1];
@@ -20,7 +20,7 @@ var DATABASE_NAME     = url[6];
 var DATABASE_STORAGE  = process.env.DATABASE_STORAGE;
 
 
-// Usar BBDD SQLite o Postgres
+// Usar BBDD SQLite o Postgres   //storage:  DATABASE_STORAGE,   // solo local (.env)
 var sequelize = new Sequelize(DATABASE_NAME, 
                 DATABASE_USER, 
                 DATABASE_PASSWORD, 
@@ -28,9 +28,9 @@ var sequelize = new Sequelize(DATABASE_NAME,
                         protocol: DATABASE_PROTOCOL, 
                         port:     DATABASE_PORT,
                         host:     DATABASE_HOST,
-                        storage:  DATABASE_STORAGE,   // solo local (.env)
                         omitNull: true                // solo Postgres
-                      });
+                      });                                                
+                        
 
 // Importar la definicion de la tabla Quiz de quiz.js
 var Quiz = sequelize.import(path.join(__dirname,'quiz'));
