@@ -1,8 +1,8 @@
 module.exports = {
 
     'facebookAuth' : {
-        'clientID'      : '996561877095212', // your App ID
-        'clientSecret'  : '78e9b2f39a6df5c8c9503f4167938a5a', // your App Secret
+        'clientID'      : '1565971383704897', // your App ID
+        'clientSecret'  : 'c7d5d9321a4f2f55e74ec8c512098680', // your App Secret
         'callbackURL'   : 'https://myquiz-2016.herokuapp.com/auth/facebook/callback/'
     },
 

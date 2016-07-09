@@ -33,6 +33,7 @@ router.delete('/quizzes/:quizId(\\d+)',    quizController.destroy);
 
 router.get('/users',                       userController.index);
 router.get('/profile',			           userController.show); 
+router.delete('/users/:userId(\\d+)',      userController.destroy);
 
 //========= VIDEO =========
 router.get('/video',                       videoController.show);

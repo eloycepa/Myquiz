@@ -46,4 +46,15 @@ exports.isLoggedIn = function(req, res, next) {
 
     // if they aren't redirect them to the home page
     res.redirect('/session/facebook');
-}
+};
+
+exports.destroy = function(req, res, next) {
+    req.user.destroy()
+        .then(function() {
+            req.flash('success', 'Usuario eliminado con éxito.');
+            res.redirect('/');
+        })
+        .catch(function(error){ 
+            next(error); 
+        });
+};

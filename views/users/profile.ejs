@@ -1,8 +1,22 @@
+
+<h2>Usuario</h2>
+
 <p>
     <strong>id</strong>: <%= user.id %><br>
     <strong>email</strong>: <%= user.email %><br>
     <strong>name</strong>: <%= user.name %>
 </p>
 
+<p>
+  <a href="/users/<%= user.id %>?_method=DELETE"> 
+    <button type="button"
+            onClick="return confirm('Borrar cuenta: <%= user.name %>');">
+       Borrar 
+    </button>
+  </a>
+</p>
 
 
+<a href="/users"> 
+   <button type="button">Volver</button>
+</a>
