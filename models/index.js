@@ -4,7 +4,7 @@ var path = require('path');
 var Sequelize = require('sequelize');
 
 // Postgres 
-var DATABASE_URL = "postgres://mgqxtkzjptzjuo:NCYkkx2MzvQd1oCkyhuohF-u2q@ec2-50-17-253-74.compute-1.amazonaws.com:5432/de29v7bq1qatul";
+var DATABASE_URL = "postgres://zynptssuzhhxgq:eByP8T_tbgtOK4s8YTwuPFCBYV@ec2-54-243-52-209.compute-1.amazonaws.com:5432/d4sq97889sjo7j";
 // SQLite   
 //var DATABASE_URL = sqlite://:@:/
 var url = DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
@@ -20,7 +20,7 @@ var DATABASE_NAME     = url[6];
 var DATABASE_STORAGE  = process.env.DATABASE_STORAGE;
 
 
-// Usar BBDD SQLite o Postgres   //storage:  DATABASE_STORAGE,   // solo local (.env)
+// Usar BBDD SQLite o Postgres   //
 var sequelize = new Sequelize(DATABASE_NAME, 
                 DATABASE_USER, 
                 DATABASE_PASSWORD, 
@@ -28,6 +28,7 @@ var sequelize = new Sequelize(DATABASE_NAME,
                         protocol: DATABASE_PROTOCOL, 
                         port:     DATABASE_PORT,
                         host:     DATABASE_HOST,
+                        storage:  DATABASE_STORAGE,   // solo local (.env)
                         omitNull: true                // solo Postgres
                       });                                                
                         
