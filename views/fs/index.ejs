@@ -7,15 +7,20 @@
 </div>
 
 
-<ol >
-    <% for (i in breadcrumb) { %>
+<table>
+  <tr>
+    <% for (i in breadcrumb) { %>  
+        
         <% if ( i == breadcrumb.length - 1 ) { %>
-          <li class="active"> <%= breadcrumb[i].title %> </li>
+          <td class="active"> <%= breadcrumb[i].title %> </td>
         <% } else { %>
-          <li> <a href="/archivo?path=<%= breadcrumb[i].path %>"> <%= breadcrumb[i].title %></a> </li>
+          <td> <a href="/archivo?path=<%= breadcrumb[i].path %>"> <%= breadcrumb[i].title %></a> </td>
         <% } %>
+        <td>/</td>
+          
     <% } %>
-</ol>
+  </tr>
+</table>
 
 
 <div>
@@ -34,8 +39,9 @@
       <!-- Fotos -->
 
       <div>
-      <p>Imágenes</p>
+
       <% if (images.length > 0) { %>
+      <p>Imágenes</p>
                 <% for ( c in images) { %>
                     <% var item = images[c]; %>
 
@@ -46,8 +52,9 @@
       </div>
 
      <!-- Peliculas -->
-     <p>Vídeos</p>
+
       <% if (movies.length > 0) { %>
+          <p>Vídeos</p>
           <% for (c in movies) { %>
               <% var item = movies[c]; %>
 
