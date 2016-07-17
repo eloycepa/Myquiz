@@ -13,7 +13,7 @@ var util = require('util');
 //Especificamos la ruta de nuestro archivo
 var repositorio = "public/archivo";
 
-// GET /events
+// GET /archivo
 exports.index = function(req, res, next) {
 
     //Lee el path que se le indica en la query
