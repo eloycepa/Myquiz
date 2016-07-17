@@ -95,15 +95,16 @@ passport.use(new FacebookStrategy({
     }));
 
 
-// POST /session   -- Crear la sesion si usuario se autentica
+// GET /auth/facebook 
 exports.create = function(req, res, next) {
     console.log('_=ª_ =========>');
     passport.authenticate('facebook', { scope : 'email' })(req, res, next);
         
 };
 
-// Redirecciona en función de exito en el login o fallo
+// GET /auth/facebook/callback
 exports.fbcallback = function(req, res, next){
+    // Redirecciona en función de exito en el login o fallo
     passport.authenticate('facebook',{
         successRedirect : '/profile',
         failureRedirect : '/'
@@ -120,7 +121,7 @@ exports.loginRequired = function (req, res, next) {
 };
 
 
-// DELETE /session   -- Destruir sesion 
+// GET /logout  
 exports.destroy = function(req, res, next) {
 
     delete req.logout();
