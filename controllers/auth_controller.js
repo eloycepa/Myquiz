@@ -10,15 +10,18 @@ var models = require('../models');
 var configAuth = require('../config/auth');
 
 
-// used to serialize the user for the session
+//Serializa el usuario para la sesión
 passport.serializeUser(function(user, done) {
     console.log("== SERIALIZEUSER ==");
+//Serializa el id de usuario en la sesión    
     done(null, user.id);
 });
 
-// used to deserialize the user
+// Deserializa el usuario
 passport.deserializeUser(function(id, done) {
     console.log("== DESERIALIZEUSER ==");
+    //Toma el id de usuario de la sesión y busca en la base de datos un usuario
+    //Si lo encuentra estará accesible en req.user
     models.User.findById(id)
         .then(function(user) {
         if(user){
@@ -30,45 +33,38 @@ passport.deserializeUser(function(id, done) {
         done(err);
     });
 });
-    //    profileFields   : ["id", "birthday", "email", "first_name", "gender", "last_name"]
- 
-
-//clientID        : configAuth.facebookAuth.clientID,
-//clientSecret    : configAuth.facebookAuth.clientSecret,
-//callbackURL     : configAuth.facebookAuth.callbackURL
 
 
 
+//Definicón de la estrategia de Facebook que se va a emplear para la autenticación
 passport.use(new FacebookStrategy({
 
-        // pull in our app id and secret from our auth.js file
+        // Se especifican los credenciales de la App de Facebook que vamos a utilizar
         clientID        : configAuth.facebookAuth.clientID,
         clientSecret    : configAuth.facebookAuth.clientSecret,
         callbackURL     : configAuth.facebookAuth.callbackURL,
         profileFields   : ["id", "birthday", "email", "first_name", "gender", "last_name"]
-   
+
+        
     }, function(token, refreshToken, profile, done) {
     
         // asynchronous
         process.nextTick(function() {
-            console.log("_==º_    _==º_");
-            // find the user in the database based on their facebook id
+
+            //Encuentra el usuario en la base de datos filtrando por el id 
             var userId = parseInt(profile.id);
+
+            //El siguiente log muestra los datos del usuario que Facebook nos devuelve después de un login correcto
             console.log(JSON.stringify(profile));
 
             models.User.findById(userId)
              .then(function(user) {
-                if (user) {                                               // if the user is found, then log them in
-                    console.log("_==º_  _==º_   _==º_");
-                    console.log(stringify(user));
-                    return done(null, user);                                // user found, return that user
+                if (user) {                                               
+            // Si el usuario ya se ha logueado antes en la aplicación lo devuelve    
+                    return done(null, user);                                
                 } else {
+            // Si es la primera vez, se crea un perfil para el usuario
                     console.log('Se empieza a crear el usuario');
-
-                    // if there is no user found with that facebook id, create them
-                    // set the users facebook id
-                    // name:     profile.name.givenName + ' ' + profile.name.familyName, // look at the passport user profile to see how names are returned
-                    // we will save the token that facebook provides to the user 
                     var uname = profile.name.givenName   ||  " ";
                     console.log(uname);
                     var midname = profile.name.middleName  ||  " ";
@@ -76,13 +72,14 @@ passport.use(new FacebookStrategy({
                     var faname = profile.name.familyName   ||  " ";
                     console.log(faname);
 
-                     var user = models.User.build({ id:       userId,                   
+            //Se crea un usuario a partir de los datos que se obtienen de objeto profile que nos devuelve Facebook
+                    var user = models.User.build({ id:       userId,                   
                                                    name:     uname + " " + midname + " " + faname,
                                                    tocken:   profile.accessToken,                    
                                                    email:    profile.emails[0].value
                                                });
-    
-                    user.save({fields: ["id", "name", "token", "email"]})       // save our user to the database
+            //Se guarda el usuario en la base de datos
+                    user.save({fields: ["id", "name", "token", "email"]})       
                           .then(function(user) {
                             console.log('success', 'Usuario creado con éxito.');
                           })
@@ -105,11 +102,21 @@ exports.create = function(req, res, next) {
         
 };
 
+// Redirecciona en función de exito en el login o fallo
 exports.fbcallback = function(req, res, next){
     passport.authenticate('facebook',{
         successRedirect : '/profile',
         failureRedirect : '/'
     })(req, res, next);
+};
+
+//Comprueba si existe la sesión
+exports.loginRequired = function (req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.render('users/nolog.ejs');
+    }
 };
 
 

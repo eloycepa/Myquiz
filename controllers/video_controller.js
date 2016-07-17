@@ -51,8 +51,14 @@ exports.streaming = function(req, res){
     }
 };
 
+
+
+
+
+
+//Carga de la vista de la reproducción de video con HLS
+
 exports.hls = function(req, res){
-//   var uri = url.parse(req.url).pathname;
    res.render('videos/streaming.ejs');
 };
 
