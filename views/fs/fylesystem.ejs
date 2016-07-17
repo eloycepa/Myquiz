@@ -1,0 +1,78 @@
+
+
+<div class="row">
+  <div class="page-header">
+    <h1 class="text-center">Almacen de conocimiento</h1>
+  </div>
+</div>
+
+
+<ol >
+    <% for (i in breadcrumb) { %>
+        <% if ( i == breadcrumb.length - 1 ) { %>
+          <li class="active"> <%= breadcrumb[i].title %> </li>
+        <% } else { %>
+          <li> <a href="/archivo?path=<%= breadcrumb[i].path %>"> <%= breadcrumb[i].title %></a> </li>
+        <% } %>
+    <% } %>
+</ol>
+
+
+<div>
+
+      <!-- Directorios -->
+      <p></p>
+      <div>
+      <% for (c in directories) { %>
+          <% var item = directories[c]; %>
+          <li class="list-group-item">  
+             <a href="/archivo?path=<%= item.dir %>"> <%= item.name %> </a> 
+          </li>
+      <% } %>
+      </div>
+
+      <!-- Fotos -->
+
+      <div>
+      <p>Imágenes</p>
+      <% if (images.length > 0) { %>
+                <% for ( c in images) { %>
+                    <% var item = images[c]; %>
+
+                      <a href="/archivo/<%= item.name %>"> <img src="/archivo/<%= item.name %>" width="10%" height="10%" alt="<%= item.name %>" ></a>  
+
+                <% } %>  
+      <% } %>
+      </div>
+
+     <!-- Peliculas -->
+     <p>Vídeos</p>
+      <% if (movies.length > 0) { %>
+          <% for (c in movies) { %>
+              <% var item = movies[c]; %>
+
+              <div class="jumbotron">
+
+                <h3> <%= item.name %> </h3>
+
+                <div class="embed-responsive embed-responsive-16by9">
+                  <video class="embed-responsive-item" src="/archivo<%= item.file %>" controls> </video>
+                </div>
+
+              </div>
+          <% } %>
+      <% } %>
+
+     <!-- Otros -->
+
+      <% if (otherfiles.length > 0) { %>
+        <ul>
+          <% for (c in otherfiles) { %>
+              <% var item = otherfiles[c]; %>
+              <li> <%= item.name %> </li>
+          <% } %>
+        </ul>
+      <% } %>
+
+</div>
+
