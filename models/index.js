@@ -4,7 +4,7 @@ var path = require('path');
 var Sequelize = require('sequelize');
 
 // Postgres 
-var DATABASE_URL = "postgres://zynptssuzhhxgq:eByP8T_tbgtOK4s8YTwuPFCBYV@ec2-54-243-52-209.compute-1.amazonaws.com:5432/d4sq97889sjo7j";
+var DATABASE_URL = "DATABASE_URL";
 // SQLite   
 //var DATABASE_URL = sqlite://:@:/
 var url = DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
@@ -47,7 +47,6 @@ sequelize.sync()
         return Quiz.count()
                 .then(function (c) {
                     if (c === 0) {   // la tabla se inicializa solo si está vacía
-                        console.log("Se metiooooooooooooooooooo!!!!!!!!!");
                         return Quiz.bulkCreate([ {question: 'Capital de Italia',   answer: 'Roma'},
                                                  {question: 'Capital de Portugal', answer: 'Lisboa'}
                                               ])

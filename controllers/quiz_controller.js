@@ -4,7 +4,6 @@ var models = require('../models');
 
 // Autoload el quiz asociado a :quizId
 exports.load = function(req, res, next, quizId) {
-  console.log('Loooooooooggggggg');
 	models.Quiz.findById(quizId)
   		.then(function(quiz) {
       		if (quiz) {

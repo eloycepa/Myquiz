@@ -4,16 +4,6 @@ var fs = require('fs');
 var zlib = require('zlib');
 
 PORT = 5000;
-// var path = require('path');
-
-// var movie_mp4;
-
-// fs.readFile(path.resolve(__dirname,"../public/videos/big_buck_bunny.mp4"), function (err, data) {
-//     if (err) {
-//         throw err;
-//     }
-//     movie_mp4 = data;
-// });
 
 exports.show = function(req, res, next){
 	console.log('Se mete en el show');
@@ -50,11 +40,6 @@ exports.streaming = function(req, res){
         fs.createReadStream(videoPath).pipe(res);
     }
 };
-
-
-
-
-
 
 //Carga de la vista de la reproducción de video con HLS
 
